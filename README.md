@@ -6,12 +6,10 @@ Sooo... I configured this terminal 🙃
 
 It's basically a very lightweight Javascript console as it uses `eval()`.
 
-(See https://github.com/jcubic/jquery.terminal)
+See https://github.com/jcubic/jquery.terminal
 
 • You get the `Big()` function to work with big-numbers (See big.js).
-
 • You get the w3 (web3) & eth (ethers) instances connected right away.
-
 • You get a wrapper function for interacting with contracts which by default loads the ABI's of ERC20, ERC721, ERC1155, UniswapRouterV2, UniswapFactoryV2, UniswapRouterV3 and UniswapFactoryV3 💪
 
 
