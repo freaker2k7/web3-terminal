@@ -5,6 +5,10 @@ Not speaking about ABI's and wallets 🤦‍♂️
 
 Sooo... I configured this terminal 🙃
 
+## Demo
+
+https://freaker2k7.github.io/web3-terminal/index.html
+
 It's basically a very lightweight Javascript console as it uses `eval()`.<br>
 See https://github.com/jcubic/jquery.terminal
 
