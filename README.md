@@ -9,6 +9,8 @@ Sooo... I configured this terminal 🙃
 
 https://freaker2k7.github.io/web3-terminal/index.html
 
+## Details
+
 It's basically a very lightweight Javascript console as it uses `eval()`.<br>
 See https://github.com/jcubic/jquery.terminal
 
