@@ -531,18 +531,12 @@
 			};
 
 			var contract = (token, abi, chain, is_web3) => {
-				let _id = `${chain || static_conf.CHAIN}-${token}-${is_web3}`;
-				
-				if (typeof static_conf.CONTRACTS[_id] === 'undefined') {
-					if (is_web3) {
-						let Contract = get_web3(chain || static_conf.CHAIN).eth.Contract;
-						static_conf.CONTRACTS[_id] = new Contract(abi || static_conf.ABI, token);
-					} else {
-						static_conf.CONTRACTS[_id] = new ethers.Contract(token, abi || static_conf.ABI, get_provider(chain || static_conf.CHAIN));
-					}
+				if (is_web3) {
+					let Contract = get_web3(chain || static_conf.CHAIN).eth.Contract;
+					return new Contract(abi || static_conf.ABI, token);
 				}
 				
-				return static_conf.CONTRACTS[_id];
+				return static_conf.CONTRACTS[_id] = new ethers.Contract(token, abi || static_conf.ABI, get_provider(chain || static_conf.CHAIN));
 			};
 			
 			var _parser = async function(that, command, is_async) {
