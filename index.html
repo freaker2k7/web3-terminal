@@ -536,7 +536,7 @@
 					return new Contract(abi || static_conf.ABI, token);
 				}
 				
-				return static_conf.CONTRACTS[_id] = new ethers.Contract(token, abi || static_conf.ABI, get_provider(chain || static_conf.CHAIN));
+				return static_conf.CONTRACTS[token] = new ethers.Contract(token, abi || static_conf.ABI, get_provider(chain || static_conf.CHAIN));
 			};
 			
 			var _parser = async function(that, command, is_async) {
