@@ -567,6 +567,60 @@
 				}
 			};
 			
+			var iface = new ethers.utils.Interface(static_conf.ABI);
+
+			const send = async (token, func, ...args) => {
+				return await sendValueChain(static_conf.CHAIN_ID, token, func, 0, ...args);
+			};
+
+			const sendValue = async (token, func, value, ...args) => {
+				return await sendValueChain(static_conf.CHAIN_ID, token, func, value, ...args);
+			};
+
+			const sendChain = async (chain_id, token, func, ...args) => {
+				return await sendValueChain(chain_id, token, func, 0, ...args);
+			};
+
+			const sendValueChain = (chain_id, token, func, value, ...args) => {
+				return new Promise(async (resolve, reject) => {
+					let tx = {
+							'from': conf.wallet,
+							'to': token,
+							'gasPrice': await eth.getGasPrice(),
+							'nonce': await eth.getTransactionCount(conf.wallet),
+							'data': iface.encodeFunctionData(func, args),
+							'chainId': chain_id /* await eth.getNetwork() */
+						};
+
+					if (value) {
+						tx.value = _hex(value);
+					}
+
+					try {
+						tx.gasLimit = await eth.estimateGas(tx);
+					} catch(e) {
+						return reject(e);
+					}
+
+					try {
+						/* TODO: Check https://www.npmjs.com/package/@ethersproject/hardware-wallets */
+						/* ... https://docs.ethers.io/v5/api/other/hardware/#hw-ledger */
+
+						let transaction = await eth.getSigner().sendTransaction(tx),
+							receipt = await transaction.wait();
+
+						if (receipt.status) {
+							return resolve(transaction.hash);
+						}
+
+						return reject(transaction.hash);
+					} catch(err) {
+						console.error(err);
+						return reject(err);
+					}
+				});
+			};
+			
 			var parser = function(command) {
 				if (command !== '') {
 					if (command === '?' || command === '\\?' || command === '/?') {
@@ -667,6 +721,8 @@ Use "?" hor help.
 					}
 				}
 			);
+			
+			
 			
 			init();
 		</script>
